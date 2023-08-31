@@ -1,6 +1,6 @@
 :root {
   --pink: #f14e95;
-  --bg: #0a0a0a;
+  --bg: #101010;
   --shadow: 2px 2px 20px #000000;
 }
 
@@ -441,7 +441,7 @@ footer li {
   }
 
   .simply-countdown > .simply-section {
-    padding: 40px;
+    padding: 35px;
     margin: 3px;
   }
 
@@ -461,5 +461,15 @@ footer li {
 
   .timeline li .timeline-panel::after {
     top: 31px;
+  }
+
+  .rsvp form {
+    margin: 0 10px;
+  }
+
+  .rsvp form button {
+    margin: -20px 0 0 133px;
+    padding: 7px;
+    width: 70px;
   }
 }
