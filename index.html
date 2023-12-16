@@ -28,10 +28,7 @@
     <!-- HERO -->
     <section id="hero" class="hero w-100 h-100 p-3 mx-auto text-center d-flex justify-content-center align-items-center text-white">
       <main>
-        <audio hidden autoplay="true">
-          <source src="komang.mp3" type="audio/mpeg">
-        </audio>
-        <h4>Kepada Bapak/Ibu/Saudara/I,</h4>
+        <h4>Kepada <span>Bapak/Ibu/Saudara/I, </span></h4>
         <h1>Seni & Seno</h1>
         <p>Akan melangsungkan resepsi pernikahan dalam:</p>
         <div class="simply-countdown"></div>
@@ -125,6 +122,9 @@
           <div class="col-md-8 col-10 text-center" data-aos="fade-up" data-aos-duration="1000">
             <h2>Informasi Acara</h2 >
             <p class="alamat">alamat: Jl. Cipanas Baru, Pananjung, Kec. Tarogong Kaler, Kabupaten Garut, Jawa Barat 4415</p>
+
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15834.373180969658!2d107.8800629!3d-7.1729221!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68b0c6204ec589%3A0x6ffb5cc1e0bacbc7!2sHotel%20Santika%20Garut!5e0!3m2!1sen!2sid!4v1702702627042!5m2!1sen!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
             <a href="https://goo.gl/maps/aVPjgMpRnNpKiEVXA" target="_blank" class="btn btn-light btn-sm my-4">Klik untuk membuka peta</a>
             <p class="description">Diharapkan untuk tidak salah alamat dan tanggal. Manakala tiba di tujuan namun tidak ada tanda - tanda sedang dilangsungkan pernikahan, boleh jadi anda salah jadwal, atau salah tempat</p>
           </div>
@@ -378,6 +378,31 @@
       <button class="btn btn-primary">Kirim</button>
     </div>
     </form>
+
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wedding-eqonzpdk1t.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    </div>
+
 </section>
 <!-- RSVP END -->
 
@@ -433,6 +458,17 @@
     </div>
   </div>
 </footer>
+
+<div id="audio-container">
+  <audio id="song" autoplay loop>
+    <source src="komang.mp3" type="audio/mp3">
+  </audio>
+
+    <div class="audio-icon-wrapper" style="display: none;">
+      <i class="bi bi-disc"></i>
+    </div>
+</div>
+
   <!-- CARA ATASI BUG SCROLL -->
   <script>
     const hamburger = document.querySelector('.navbar-toggler');
@@ -478,6 +514,8 @@
       <!-- script disable scroll -->
       <script>
         const rootElement = document.querySelector(":root");
+        const audioIconWrapper = document.querySelector('.audio-icon-wrapper');
+        const audioIcon = document.querySelector('.audio-icon-wrapper i');
 
         function disableScroll() {
         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -491,20 +529,55 @@
       }
 
       function enableScroll() {
-        window.onscroll = function () {}
+        window.onscroll = function () { }
         rootElement.style.scrollBehavior = 'smooth';
-        localStorage.setItem( 'opened', 'true');
+        //localStorage.setItem( 'opened', 'true');
+        playAudio();
       }
 
-      if(!localStorage.getItem('opened')) {
-        disableScroll();
+      function playAudio() {
+        const song = document.querySelector('#song');
+        song.volume = 0.5;
+        audioIconWrapper.style.display = 'flex';
+        song.play();
+        isPlaying = true;
       }
+
+      audioIconWrapper.onclick = function () {
+        if (isPlaying) {
+          song.pause();
+          audioIcon.classList.remove('bi-disc');
+          audioIcon.classList.add('bi-pause-circle');
+        } else {
+          song.play();
+          audioIcon.classList.add('bi-disc');
+          audioIcon.classList.remove('bi-pause-circle');
+        }
+
+        isPlaying = !isPlaying;
+      }
+
+      //if(!localStorage.getItem('opened')) {
+      //  disableScroll();
+      //}
+      disableScroll();
       </script>
 
     <!-- Link Animate on scroll -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init();
+    </script>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const nama = urlParams.get('nama') || '';
+      const pronoun = urlParams.get('p') || 'Bapak/Ibu/Saudara/i';
+
+      const namaContainer = document.querySelector('.hero h4 span');
+      namaContainer.innerText = `${pronoun} ${nama},`.replace(/ ,$/, ',');
+
+      document.querySelector('#nama').value = nama;
     </script>
   </body>
 </html>
